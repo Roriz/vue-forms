@@ -15,5 +15,10 @@ export default new Router({
       name: 'formsList',
       component: () => import(/* webpackChunkName: "about" */ './views/forms/list.vue'),
     },
+    {
+      path: '/forms/create',
+      name: 'formsCreate',
+      component: () => import(/* webpackChunkName: "about" */ './views/forms/create.vue'),
+    },
   ],
 });

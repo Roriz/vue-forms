@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: 'home',
+  name: 'form-list',
 
   props: {
     headers: {

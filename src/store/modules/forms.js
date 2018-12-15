@@ -17,7 +17,13 @@ export default {
       const response = await CargoAPI.forms.list(payload);
 
       response.forEach(r => commit('ADD', r));
-      console.log('-- response', response);
+      return response;
+    },
+
+    async create({ commit }, form) {
+      const response = await CargoAPI.forms.create(form);
+
+      commit('ADD', response);
       return response;
     },
   },
