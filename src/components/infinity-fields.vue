@@ -1,9 +1,11 @@
 <template>
   <ul class="infinity-fields">
     <li v-for="(field, key) in value" :key="key">
-      <div>Type: {{ field.type }}</div>
+      <field-to-component :field="field" />
       <v-btn @click.prevent="handleDestroy(key)">Destroy</v-btn>
     </li>
+    <li v-show="value.length === 0">Please insert a first field config</li>
+
     <li>
       <v-btn @click.prevent="creating = true">Add</v-btn>
       <field-dialog-create :opened="creating" @close="creating = false" @input="handleAdd"/>
@@ -12,6 +14,7 @@
 </template>
 
 <script>
+import FieldToComponent from '@/components/field-to-component.vue';
 import FieldDialogCreate from '@/views/fields/dialog-create.vue';
 
 export default {
@@ -19,6 +22,7 @@ export default {
 
   components: {
     FieldDialogCreate,
+    FieldToComponent,
   },
 
   props: {
@@ -55,5 +59,6 @@ export default {
     display: flex
     flex-direction: row
     align-items: center
+    justify-content: space-between
 
 </style>

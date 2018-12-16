@@ -12,9 +12,23 @@
 
         <v-card-text>
           <v-select
+            v-model="field.type"
             :items="fieldTypes"
             label="Type"
           />
+
+          <v-text-field
+            v-model="field.label"
+            label="Label"
+            required
+          />
+
+          <v-switch
+            label="Required"
+            v-model="field.required"
+          />
+
+          <field-multiple-options v-if="needOptions" v-model="field.options"/>
         </v-card-text>
 
         <v-divider></v-divider>
@@ -29,13 +43,19 @@
 </template>
 
 <script>
+import FieldMultipleOptions from '@/views/fields/multiple-options.vue';
+
 export default {
   name: 'infinity-fields',
 
+  components: {
+    FieldMultipleOptions,
+  },
+
   props: {
     value: {
-      type: Object,
-      default: () => ({ type: 'text' }),
+      type: Array,
+      default: () => ([]),
     },
 
     opened: {
@@ -47,34 +67,51 @@ export default {
   data() {
     return {
       field: {
-        type: 'text',
+        type: '',
+        label: '',
+        options: [],
+        required: false,
       },
     };
   },
 
   mounted() {
-    if (this.value) {
-      this.field = {
-        ...this.value,
-        ...this.field,
-      };
-    }
+    this.reset();
   },
 
   methods: {
     handleSubmit() {
-      console.log('-- handleSubmit', this.field);
       this.$emit('input', this.field);
     },
 
     handleOpened() {
       this.$emit('close');
     },
+
+    reset() {
+      this.field = {
+        type: '',
+        label: '',
+        options: [],
+        required: false,
+        ...(this.value || {}),
+      };
+    },
   },
 
   computed: {
     fieldTypes() {
-      return ['text'];
+      return ['text', 'select', 'checkbox', 'radio'];
+    },
+
+    needOptions() {
+      return ['select', 'checkbox', 'radio'].includes(this.field.type);
+    },
+  },
+
+  watch: {
+    opened() {
+      this.reset();
     },
   },
 };

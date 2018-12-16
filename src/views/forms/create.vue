@@ -1,14 +1,27 @@
 <template>
   <form @submit.prevent="handleSubmit">
-    <v-text-field
-      v-model="form.name"
-      label="Name"
-      required
-    />
+    <v-card>
+      <v-card-title class="headline grey lighten-2" primary-title>
+        Create form
+      </v-card-title>
 
-    <vf-infinity-fields v-model="form.fields"/>
+      <v-card-text>
+        <v-text-field
+          v-model="form.name"
+          label="Name"
+          required
+        />
 
-    <v-btn type="submit" :disabled="loading">submit</v-btn>
+        <vf-infinity-fields v-model="form.fields"/>
+      </v-card-text>
+
+      <v-divider></v-divider>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn type="submit" :disabled="loading">submit</v-btn>
+      </v-card-actions>
+    </v-card>
   </form>
 </template>
 
