@@ -2,6 +2,8 @@
   <component
     :is="componentTag"
     :field="field"
+    :value="value"
+    @input="v => $emit('input', v)"
   />
 </template>
 
@@ -33,7 +35,9 @@ export default {
       type: Object,
       required: true,
     },
-    value: {},
+    value: {
+      type: null,
+    },
   },
 
   computed: {

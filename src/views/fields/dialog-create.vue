@@ -46,7 +46,7 @@
 import FieldMultipleOptions from '@/views/fields/multiple-options.vue';
 
 export default {
-  name: 'infinity-fields',
+  name: 'dialog-create',
 
   components: {
     FieldMultipleOptions,

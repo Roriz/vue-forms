@@ -7,7 +7,7 @@
 
       <v-card-text>
         <v-text-field
-          v-model="form.name"
+          v-model="form.form"
           label="Name"
           required
         />
@@ -19,14 +19,18 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn type="submit" :disabled="loading">submit</v-btn>
+        <v-btn :disabled="loading" @click="handlePreview">Preview</v-btn>
+        <v-btn type="submit" :disabled="loading">Submit</v-btn>
       </v-card-actions>
     </v-card>
+
+    <dialog-show :opened="previewing" :form="form" @close="previewing = false"/>
   </form>
 </template>
 
 <script>
 import VfInfinityFields from '@/components/infinity-fields.vue';
+import DialogShow from '@/views/forms/dialog-show.vue';
 import EventBus from '@/utils/event-bus';
 
 export default {
@@ -34,6 +38,7 @@ export default {
 
   components: {
     VfInfinityFields,
+    DialogShow,
   },
 
   props: {
@@ -41,6 +46,7 @@ export default {
 
   data() {
     return {
+      previewing: false,
       loading: false,
       form: {
         name: '',
@@ -50,6 +56,10 @@ export default {
   },
 
   methods: {
+    handlePreview() {
+      this.previewing = true;
+    },
+
     async handleSubmit() {
       this.loading = true;
       try {

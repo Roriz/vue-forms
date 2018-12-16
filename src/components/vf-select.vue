@@ -1,7 +1,7 @@
 <template>
   <v-select
     :label="field.label"
-    :required="field.required"
+    :rules="rules"
     :items="field.options"
     @input="v => $emit('input', v)"
     item-text="label"
@@ -21,6 +21,16 @@ export default {
     field: {
       type: Object,
       required: true,
+    },
+  },
+
+  computed: {
+    rules() {
+      const rules = [];
+      if (this.field.required) {
+        rules.push(value => !!value || 'Required.');
+      }
+      return rules;
     },
   },
 };

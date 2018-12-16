@@ -2,8 +2,8 @@
   <v-text-field
     :label="field.label"
     :value="value"
+    :rules="rules"
     @input="v => $emit('input', v)"
-    :required="field.required"
   />
 </template>
 
@@ -19,6 +19,16 @@ export default {
     field: {
       type: Object,
       required: true,
+    },
+  },
+
+  computed: {
+    rules() {
+      const rules = [];
+      if (this.field.required) {
+        rules.push(value => !!value || 'Required.');
+      }
+      return rules;
     },
   },
 };
