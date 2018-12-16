@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'vf-select',
+  name: 'vf-checkbox',
 
   props: {
     value: {
@@ -29,4 +29,3 @@ export default {
   },
 };
 </script>
-

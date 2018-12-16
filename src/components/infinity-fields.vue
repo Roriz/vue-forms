@@ -1,20 +1,46 @@
 <template>
-  <ul class="infinity-fields">
-    <li v-for="(field, key) in value" :key="key">
-      <field-to-component :field="field" />
-      <v-btn @click.prevent="handleDestroy(key)">Destroy</v-btn>
-    </li>
-    <li v-show="value.length === 0">Please insert a first field config</li>
+  <div>
+    <v-toolbar flat color="white">
+      <v-toolbar-title>Fields</v-toolbar-title>
 
-    <li>
+      <v-spacer></v-spacer>
+
       <v-btn @click.prevent="creating = true">Add</v-btn>
-      <field-dialog-create :opened="creating" @close="creating = false" @input="handleAdd"/>
-    </li>
-  </ul>
+      <field-dialog-create
+        :value="value[selectedKey] || {}"
+        :opened="creating"
+        @close="closeFieldCreate"
+        @input="handleField"
+      />
+    </v-toolbar>
+
+    <v-data-table
+      :headers="headers"
+      :items="value"
+      class="elevation-1"
+      hide-actions
+      :must-sort="false"
+    >
+      <template slot="items" slot-scope="props">
+        <td>{{ props.item.label }}</td>
+        <td>{{ props.item.type }}</td>
+        <td>{{ props.item.required }}</td>
+        <td>{{ props.item.options.length }}</td>
+        <td class="justify-center layout px-0">
+          <v-icon small class="mr-2" @click="handleEdit(props.index)">
+            edit
+          </v-icon>
+          <v-icon small @click="handleDestroy(props.index)">
+            delete
+          </v-icon>
+        </td>
+      </template>
+    </v-data-table>
+  </div>
 </template>
 
 <script>
-import FieldToComponent from '@/components/field-to-component.vue';
+import { isEmpty } from 'lodash';
 import FieldDialogCreate from '@/views/fields/dialog-create.vue';
 
 export default {
@@ -22,7 +48,6 @@ export default {
 
   components: {
     FieldDialogCreate,
-    FieldToComponent,
   },
 
   props: {
@@ -30,11 +55,22 @@ export default {
       type: Array,
       required: true,
     },
+    headers: {
+      type: Array,
+      default: () => ([
+        { text: 'Label', value: 'label', sortable: false },
+        { text: 'Type', value: 'type', sortable: false },
+        { text: 'Is required', value: 'required', sortable: false },
+        { text: 'Options size', value: 'options', sortable: false },
+        { text: 'Actions', value: 'type', sortable: false },
+      ]),
+    },
   },
 
   data() {
     return {
       creating: false,
+      selectedKey: null,
     };
   },
 
@@ -43,9 +79,37 @@ export default {
       this.$emit('input', this.value.filter((v, i) => i !== key));
     },
 
-    handleAdd(field) {
-      this.creating = false;
+    handleEdit(key) {
+      this.selectedKey = key;
+      this.creating = true;
+    },
+
+    handleField(field) {
+      if (this.hasSelected) {
+        this.edit(field, this.selectedKey);
+      } else {
+        this.add(field);
+      }
+      this.closeFieldCreate();
+    },
+
+    add(field) {
       this.$emit('input', [...this.value, field]);
+    },
+
+    edit(field, key) {
+      this.$emit('input', this.value.map((v, i) => i === key ? field : v));
+    },
+
+    closeFieldCreate() {
+      this.selectedKey = null;
+      this.creating = false;
+    },
+  },
+
+  computed: {
+    hasSelected() {
+      return this.selectedKey !== null;
     },
   },
 };

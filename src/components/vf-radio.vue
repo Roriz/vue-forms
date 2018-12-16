@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'vf-select',
+  name: 'vf-radio',
 
   props: {
     value: {
@@ -26,4 +26,3 @@ export default {
   },
 };
 </script>
-
