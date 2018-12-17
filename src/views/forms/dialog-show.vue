@@ -3,23 +3,23 @@
     content-class="dialog-show"
     :value="opened"
     @input="$emit('close')"
-    :width="isMobile ? 390 : 900"
+    :width="simulateMobile ? 390 : 900"
   >
     <v-toolbar>
       <v-toolbar-title>Show Form</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <v-btn depressed>
+      <v-btn depressed v-show="$vuetify.breakpoint.mdAndUp">
         <v-switch
-          :label="isMobile ? 'Mobile' : 'Desktop'"
-          v-model="isMobile"
+          :label="simulateMobile ? 'Mobile' : 'Desktop'"
+          v-model="simulateMobile"
         />
       </v-btn>
     </v-toolbar>
 
     <div class="show-container" v-if="opened">
-      <img v-if="isMobile" src="../../assets/iphone-portrait.png" />
+      <img v-if="simulateMobile" v-show="$vuetify.breakpoint.mdAndUp" src="../../assets/iphone-portrait.png" />
 
       <div v-if="submitted" class="show-container-insider">
         <div v-for="(data, key) in beautifulData" :key="key">
@@ -52,7 +52,7 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn type="submit">Submit</v-btn>
+            <v-btn color="success" type="submit">Submit</v-btn>
           </v-card-actions>
         </v-card>
       </v-form>
@@ -84,7 +84,7 @@ export default {
   data() {
     return {
       submitted: false,
-      isMobile: true,
+      simulateMobile: true,
       valid: true,
       formData: {},
     };
@@ -108,7 +108,7 @@ export default {
 
     reset() {
       this.submitted = false;
-      this.isMobile = true;
+      this.simulateMobile = true;
       this.valid = true;
       this.formData = {};
     },
@@ -140,17 +140,21 @@ export default {
     overflow: hidden
     position: relative
 
-    img
-      background-color: white
-
-    img + .show-container-insider
-      position: absolute
-      top: 115px
-      left: 35px
-      width: 320px
-      height: 568px
-      background-color: white
-
     &-insider
       background-color: white
+
+@media (min-width: 960px)
+  .dialog-show
+    .show-container
+      img
+        background-color: white
+
+      img + .show-container-insider
+        position: absolute
+        top: 115px
+        left: 35px
+        width: 320px
+        height: 568px
+        background-color: white
+
 </style>

@@ -10,14 +10,14 @@
         <td>{{ props.item.form }}</td>
         <td>{{ props.item.fields.length }}</td>
         <td>
-          <v-btn @click="handlePreview(props.item)">Preview</v-btn>
-          <v-btn :to="`/forms/edit/${props.item.id}`">Edit</v-btn>
-          <v-btn @click="handleDestroy(props.item.id)">Destroy</v-btn>
+          <v-btn color="deep-purple lighten-2" @click="handlePreview(props.item)">Preview</v-btn>
+          <v-btn color="info" :to="`/forms/edit/${props.item.id}`">Edit</v-btn>
+          <v-btn color="error" @click="handleDestroy(props.item.id)">Destroy</v-btn>
         </td>
       </template>
     </v-data-table>
 
-    <v-btn fab bottom right color="pink" dark fixed to="/forms/create"><v-icon>add</v-icon></v-btn>
+    <v-btn fab bottom right color="success" dark fixed to="/forms/create"><v-icon>add</v-icon></v-btn>
 
     <dialog-show :opened="previewing" :form="selected" @close="previewing = false"/>
   </div>

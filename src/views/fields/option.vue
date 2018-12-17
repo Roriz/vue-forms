@@ -12,7 +12,7 @@
       @input="handleOption"
     />
 
-    <v-btn v-if="canDestroy" @click="$emit('destroy')">Destroy</v-btn>
+    <v-btn v-if="canDestroy" color="error" @click="$emit('destroy')">Destroy</v-btn>
   </li>
 </template>
 

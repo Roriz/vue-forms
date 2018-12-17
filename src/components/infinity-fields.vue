@@ -5,7 +5,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn @click.prevent="creating = true">Add</v-btn>
+      <v-btn color="green" @click.prevent="creating = true">Add</v-btn>
       <field-dialog-create
         :value="value[selectedKey] || {}"
         :opened="creating"
@@ -27,12 +27,8 @@
         <td>{{ props.item.required }}</td>
         <td>{{ props.item.options.length }}</td>
         <td class="justify-center layout px-0">
-          <v-icon small class="mr-2" @click="handleEdit(props.index)">
-            edit
-          </v-icon>
-          <v-icon small @click="handleDestroy(props.index)">
-            delete
-          </v-icon>
+          <v-btn color="info" @click="handleEdit(props.index)">Edit</v-btn>
+          <v-btn color="error" @click="handleDestroy(props.index)">Destroy</v-btn>
         </td>
       </template>
     </v-data-table>

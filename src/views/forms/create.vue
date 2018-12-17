@@ -19,8 +19,8 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn :disabled="loading" @click="handlePreview">Preview</v-btn>
-        <v-btn type="submit" :disabled="loading">Submit</v-btn>
+        <v-btn color="deep-purple lighten-2" :disabled="loading" @click="handlePreview">Preview</v-btn>
+        <v-btn color="success" type="submit" :disabled="loading">Submit</v-btn>
       </v-card-actions>
     </v-card>
 
