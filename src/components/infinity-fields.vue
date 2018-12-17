@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import { isEmpty } from 'lodash';
 import FieldDialogCreate from '@/views/fields/dialog-create.vue';
 
 export default {
@@ -98,7 +97,7 @@ export default {
     },
 
     edit(field, key) {
-      this.$emit('input', this.value.map((v, i) => i === key ? field : v));
+      this.$emit('input', this.value.map((v, i) => (i === key ? field : v)));
     },
 
     closeFieldCreate() {

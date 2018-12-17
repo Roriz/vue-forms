@@ -2,7 +2,7 @@
   <form @submit.prevent="handleSubmit">
     <v-card>
       <v-card-title class="headline grey lighten-2" primary-title>
-        Create form
+        {{ isEdit ? 'Edit' : 'Create' }} form
       </v-card-title>
 
       <v-card-text>
@@ -41,9 +41,6 @@ export default {
     DialogShow,
   },
 
-  props: {
-  },
-
   data() {
     return {
       previewing: false,
@@ -55,6 +52,10 @@ export default {
     };
   },
 
+  mounted() {
+    this.getForm(this.$route.params.id);
+  },
+
   methods: {
     handlePreview() {
       this.previewing = true;
@@ -63,16 +64,38 @@ export default {
     async handleSubmit() {
       this.loading = true;
       try {
-        await this.$store.dispatch('forms/create', this.form);
+        if (this.isEdit) {
+          await this.$store.dispatch('forms/edit', this.form);
+        } else {
+          await this.$store.dispatch('forms/create', this.form);
+        }
         this.$nextTick(() => {
           EventBus.$emit('vf-notify', { color: 'success', text: 'Form created!' });
           EventBus.$emit('reloadPage');
         });
       } catch (e) {
         console.error(e);
-        EventBus.$emit('vf-notify', { color: 'error', text: e.message });
+        EventBus.$emit('vf-notify', { color: 'error', text: e.message || 'something went wrong try again later' });
       }
       this.loading = false;
+    },
+
+    async getForm(id) {
+      if (!id) { return; }
+
+      this.loading = true;
+      try {
+        this.form = await this.$store.dispatch('forms/fetchOne', id);
+      } catch (e) {
+        console.error(e);
+      }
+      this.loading = false;
+    }
+  },
+
+  computed: {
+    isEdit() {
+      return this.$route.params.id;
     },
   },
 };

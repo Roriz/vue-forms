@@ -20,5 +20,10 @@ export default new Router({
       name: 'formsCreate',
       component: () => import(/* webpackChunkName: "about" */ './views/forms/create.vue'),
     },
+    {
+      path: '/forms/edit/:id',
+      name: 'formsEdit',
+      component: () => import(/* webpackChunkName: "about" */ './views/forms/create.vue'),
+    },
   ],
 });

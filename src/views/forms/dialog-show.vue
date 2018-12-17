@@ -28,7 +28,13 @@
           <span>{{data.value}}</span>
         </div>
       </div>
-      <v-form v-else v-model="valid" ref="form" @submit.prevent="handleSubmit" class="show-container-insider">
+      <v-form
+        v-else
+        class="show-container-insider"
+        ref="form"
+        v-model="valid"
+        @submit.prevent="handleSubmit"
+      >
         <v-card>
           <v-card-title class="headline grey lighten-2" primary-title>{{form.form}}</v-card-title>
 
@@ -148,4 +154,3 @@ export default {
     &-insider
       background-color: white
 </style>
-
