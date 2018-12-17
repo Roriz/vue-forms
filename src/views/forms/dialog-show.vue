@@ -19,7 +19,10 @@
     </v-toolbar>
 
     <div class="show-container" v-if="opened">
-      <img v-if="simulateMobile" v-show="$vuetify.breakpoint.mdAndUp" src="../../assets/iphone-portrait.png" />
+      <img
+        v-if="simulateMobile && $vuetify.breakpoint.mdAndUp"
+        src="../../assets/iphone-portrait.png"
+      />
 
       <div v-if="submitted" class="show-container-insider">
         <div v-for="(data, key) in beautifulData" :key="key">

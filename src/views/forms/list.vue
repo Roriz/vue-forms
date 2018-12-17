@@ -17,7 +17,17 @@
       </template>
     </v-data-table>
 
-    <v-btn fab bottom right color="success" dark fixed to="/forms/create"><v-icon>add</v-icon></v-btn>
+    <v-btn
+      fab
+      bottom
+      right
+      dark
+      fixed
+      color="success"
+      to="/forms/create"
+    >
+      <v-icon>add</v-icon>
+    </v-btn>
 
     <dialog-show :opened="previewing" :form="selected" @close="previewing = false"/>
   </div>
