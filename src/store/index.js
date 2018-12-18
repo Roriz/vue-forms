@@ -16,7 +16,7 @@ export default new Vuex.Store({
   },
   mutations: {
     SET_MENU(state, visible) {
-      state.visibleMenu = visible;
+      state.visibleMenu = Boolean(visible);
     },
   },
 });

@@ -5,7 +5,7 @@
 
     <v-content>
       <v-container fluid>
-        <router-view :key="viewCid"/>
+        <router-view :key="pageCid"/>
       </v-container>
     </v-content>
 
@@ -28,17 +28,17 @@ export default {
 
   data() {
     return {
-      viewCid: new Date().getTime(),
+      pageCid: new Date().getTime(),
     };
   },
 
   mounted() {
-    EventBus.$on('reloadPage', this.updateViewCid);
+    EventBus.$on('reloadPage', this.updatePageCid);
   },
 
   methods: {
-    updateViewCid() {
-      this.viewCid = new Date().getTime();
+    updatePageCid() {
+      this.pageCid = new Date().getTime();
     },
   },
 };

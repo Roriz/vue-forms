@@ -1,10 +1,10 @@
 <template>
   <v-dialog
-    :value="opened"
-    @input="handleOpened"
+    :value="true"
+    @input="close"
     width="500"
   >
-    <form @submit.prevent="handleSubmit">
+    <v-form @submit.prevent="handleSubmit">
       <v-card>
         <v-card-title class="headline grey lighten-2" primary-title>
           Add new field
@@ -14,11 +14,14 @@
           <v-select
             v-model="field.type"
             :items="fieldTypes"
+            :rules="typeRules"
             label="Type"
+            required
           />
 
           <v-text-field
             v-model="field.label"
+            :rules="labelRules"
             label="Label"
             required
           />
@@ -28,7 +31,7 @@
             v-model="field.required"
           />
 
-          <field-multiple-options v-if="needOptions" v-model="field.options"/>
+          <infinity-options v-show="needOptions" v-model="field.options"/>
         </v-card-text>
 
         <v-divider></v-divider>
@@ -38,18 +41,20 @@
           <v-btn type="submit">Submit</v-btn>
         </v-card-actions>
       </v-card>
-    </form>
+    </v-form>
   </v-dialog>
 </template>
 
 <script>
-import FieldMultipleOptions from '@/views/fields/multiple-options.vue';
+import InfinityOptions from '@/views/fields/infinity-options.vue';
+import FORM_RULES from '@/consts/form-rules';
+import FIELD_TYPES from '@/consts/field-types';
 
 export default {
   name: 'dialog-create',
 
   components: {
-    FieldMultipleOptions,
+    InfinityOptions,
   },
 
   props: {
@@ -58,9 +63,14 @@ export default {
       default: () => ({}),
     },
 
-    opened: {
-      type: Boolean,
-      default: false,
+    typeRules: {
+      type: Array,
+      default: () => ([FORM_RULES.required]),
+    },
+
+    labelRules: {
+      type: Array,
+      default: () => ([FORM_RULES.required]),
     },
   },
 
@@ -76,7 +86,10 @@ export default {
   },
 
   mounted() {
-    this.reset();
+    this.field = {
+      ...this.field,
+      ...(this.value || {}),
+    };
   },
 
   methods: {
@@ -84,34 +97,18 @@ export default {
       this.$emit('input', this.field);
     },
 
-    handleOpened() {
+    close() {
       this.$emit('close');
-    },
-
-    reset() {
-      this.field = {
-        type: '',
-        label: '',
-        options: [],
-        required: false,
-        ...(this.value || {}),
-      };
     },
   },
 
   computed: {
     fieldTypes() {
-      return ['text', 'select', 'checkbox', 'radio'];
+      return Object.values(FIELD_TYPES).map(t => t.value);
     },
 
     needOptions() {
-      return ['select', 'checkbox', 'radio'].includes(this.field.type);
-    },
-  },
-
-  watch: {
-    opened() {
-      this.reset();
+      return FIELD_TYPES.some(t => t.needOptions && t.value === this.field.type);
     },
   },
 };

@@ -1,10 +1,10 @@
 <template>
-  <ul class="multiple-options">
+  <ul class="infinity-options">
     <vf-option
       v-for="(option, key) in options"
       :key="key"
       v-model="options[key]"
-      :can-destroy="options.length > 1"
+      :can-destroy="canDestroy"
       @input="handleOption"
       @destroy="handleDestroy(key)"
     />
@@ -15,7 +15,7 @@
 import VfOption from '@/views/fields/option.vue';
 
 export default {
-  name: 'multiple-options',
+  name: 'infinity-options',
 
   components: {
     VfOption,
@@ -59,6 +59,10 @@ export default {
     filledOptions() {
       return this.options.filter(o => o.label && o.value);
     },
+
+    canDestroy() {
+      return this.options.length > 1;
+    },
   },
 
   watch: {
@@ -70,6 +74,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.multiple-options
+.infinity-options
   list-style: none
 </style>

@@ -1,7 +1,7 @@
 <template>
   <v-dialog
     content-class="dialog-show"
-    :value="opened"
+    :value="true"
     @input="$emit('close')"
     :width="simulateMobile ? 390 : 900"
   >
@@ -18,14 +18,14 @@
       </v-btn>
     </v-toolbar>
 
-    <div class="show-container" v-if="opened">
+    <div class="show-container">
       <img
         v-if="simulateMobile && $vuetify.breakpoint.mdAndUp"
         src="../../assets/iphone-portrait.png"
       />
 
       <div v-if="submitted" class="show-container-insider">
-        <div v-for="(data, key) in beautifulData" :key="key">
+        <div v-for="(data, key) in formWithValue" :key="key">
           <label>{{data.label}}</label>
           <br/>
           <span>{{data.value}}</span>
@@ -35,7 +35,7 @@
         v-else
         class="show-container-insider"
         ref="form"
-        v-model="valid"
+        v-model="isValid"
         @submit.prevent="handleSubmit"
       >
         <v-card>
@@ -46,7 +46,7 @@
               v-for="(field, key) in form.fields"
               :key="key"
               :field="field"
-              :value="formData[key]"
+              :value="formValues[key]"
               @input="v => handleFieldInput(key, v)"
             />
           </v-card-text>
@@ -78,57 +78,36 @@ export default {
       type: Object,
       required: true,
     },
-    opened: {
-      type: Boolean,
-      default: false,
-    },
   },
 
   data() {
     return {
       submitted: false,
       simulateMobile: true,
-      valid: true,
-      formData: {},
+      isValid: true,
+      formValues: {},
     };
-  },
-
-  mounted() {
-    this.reset();
   },
 
   methods: {
     handleSubmit() {
       this.$refs.form.validate();
-      if (this.valid) {
+      if (this.isValid) {
         this.submitted = true;
       }
     },
 
     handleFieldInput(fieldKey, value) {
-      this.formData[fieldKey] = value;
-    },
-
-    reset() {
-      this.submitted = false;
-      this.simulateMobile = true;
-      this.valid = true;
-      this.formData = {};
+      this.formValues[fieldKey] = value;
     },
   },
 
   computed: {
-    beautifulData() {
+    formWithValue() {
       return this.form.fields.map((field, key) => ({
         ...field,
-        value: this.formData[key],
+        value: this.formValues[key],
       }));
-    },
-  },
-
-  watch: {
-    opened() {
-      this.reset();
     },
   },
 };

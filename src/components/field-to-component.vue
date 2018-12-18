@@ -12,13 +12,7 @@ import VfCheckbox from '@/components/vf-checkbox.vue';
 import VfInputText from '@/components/vf-input-text.vue';
 import VfRadio from '@/components/vf-radio.vue';
 import VfSelect from '@/components/vf-select.vue';
-
-const TYPES_TO_COMPONENTS = {
-  text: 'vf-input-text',
-  select: 'vf-select',
-  checkbox: 'vf-checkbox',
-  radio: 'vf-radio',
-};
+import FIELD_TYPES from '@/consts/field-types';
 
 export default {
   name: 'field-to-component',
@@ -42,7 +36,11 @@ export default {
 
   computed: {
     componentTag() {
-      return TYPES_TO_COMPONENTS[this.field.type];
+      const fieldType = FIELD_TYPES.find(type => type.value === this.field.type);
+      if (fieldType) {
+        return fieldType.component;
+      }
+      return '';
     },
   },
 };

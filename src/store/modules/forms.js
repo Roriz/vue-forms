@@ -3,9 +3,11 @@ import CargoAPI from '@/plugins/cargox-api';
 
 export default {
   namespaced: true,
+
   state: {
     list: [],
   },
+
   mutations: {
     ADD(state, form) {
       state.list.push(form);
@@ -20,12 +22,12 @@ export default {
 
   actions: {
     persistForm({ state, commit }, form) {
-      const persisted = {
+      const persistedForm = {
         id: state.list.length + 1,
         ...form,
       };
-      commit('ADD', persisted);
-      return persisted;
+      commit('ADD', persistedForm);
+      return persistedForm;
     },
 
     async fetchBy({ dispatch }, payload = {}) {

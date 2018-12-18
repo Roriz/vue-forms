@@ -29,7 +29,7 @@
       <v-icon>add</v-icon>
     </v-btn>
 
-    <dialog-show :opened="previewing" :form="selected" @close="previewing = false"/>
+    <dialog-show v-if="previewing" :form="selected" @close="previewing = false"/>
   </div>
 </template>
 
@@ -79,6 +79,7 @@ export default {
       try {
         this.forms = await this.$store.dispatch('forms/fetchBy');
       } catch (e) {
+        // TODO: Add bug/request tracker like bugsnag
         console.error(e);
       }
 
@@ -90,8 +91,9 @@ export default {
 
       try {
         await this.$store.dispatch('forms/destroy', id);
-        this.forms = this.forms.filter(f => f.id !== id);
+        this.forms = this.$store.state.forms.list || [];
       } catch (e) {
+        // TODO: Add bug/request tracker like bugsnag
         console.error(e);
       }
 

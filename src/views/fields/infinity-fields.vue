@@ -6,7 +6,8 @@
       <v-spacer></v-spacer>
 
       <v-btn color="green" @click.prevent="creating = true">Add</v-btn>
-      <field-dialog-create
+      <create-field
+        v-if="hasSelected"
         :value="value[selectedKey] || {}"
         :opened="creating"
         @close="closeFieldCreate"
@@ -19,7 +20,6 @@
       :items="value"
       class="elevation-1"
       hide-actions
-      :must-sort="false"
     >
       <template slot="items" slot-scope="props">
         <td>{{ props.item.label }}</td>
@@ -36,13 +36,13 @@
 </template>
 
 <script>
-import FieldDialogCreate from '@/views/fields/dialog-create.vue';
+import CreateField from '@/views/fields/dialog-create.vue';
 
 export default {
   name: 'infinity-fields',
 
   components: {
-    FieldDialogCreate,
+    CreateField,
   },
 
   props: {

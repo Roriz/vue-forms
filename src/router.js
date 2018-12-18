@@ -8,22 +8,22 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: () => import(/* webpackChunkName: "about" */ './views/home.vue'),
+      component: () => import(/* webpackChunkName: "home" */ './views/home.vue'),
     },
     {
       path: '/forms',
       name: 'formsList',
-      component: () => import(/* webpackChunkName: "about" */ './views/forms/list.vue'),
+      component: () => import(/* webpackChunkName: "forms-list" */ './views/forms/list.vue'),
     },
     {
       path: '/forms/create',
       name: 'formsCreate',
-      component: () => import(/* webpackChunkName: "about" */ './views/forms/create.vue'),
+      component: () => import(/* webpackChunkName: "forms-create" */ './views/forms/create.vue'),
     },
     {
       path: '/forms/edit/:id',
       name: 'formsEdit',
-      component: () => import(/* webpackChunkName: "about" */ './views/forms/create.vue'),
+      component: () => import(/* webpackChunkName: "forms-create" */ './views/forms/create.vue'),
     },
   ],
 });

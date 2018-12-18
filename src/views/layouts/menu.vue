@@ -28,6 +28,8 @@
 
 <script>
 export default {
+  name: 'vf-menu',
+
   methods: {
     handleMenu(visible) {
       this.$store.commit('SET_MENU', visible);

@@ -4,6 +4,7 @@
   "private": false,
   "author": "Radamés Roriz <radamesroriz@gmail.com> (https://github.com/Roriz/)",
   "scripts": {
+    "start": "npm i && npm run serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
@@ -12,7 +13,6 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "lodash": "^4.17.11",
     "register-service-worker": "^1.5.2",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",

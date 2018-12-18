@@ -12,7 +12,7 @@
       @input="handleOption"
     />
 
-    <v-btn v-if="canDestroy" color="error" @click="$emit('destroy')">Destroy</v-btn>
+    <v-btn v-show="canDestroy" color="error" @click="$emit('destroy')">Destroy</v-btn>
   </li>
 </template>
 
@@ -41,25 +41,30 @@ export default {
   },
 
   mounted() {
-    this.option = this.value;
+    this.setOption(this.value);
   },
 
   methods: {
     handleOption() {
-      if (!this.valid) { return; }
+      if (!this.isValid) { return; }
 
       this.$emit('input', this.option);
+    },
+
+    setOption() {
+      this.option = this.value;
     },
   },
 
   computed: {
-    valid() {
+    isValid() {
       return this.option.value && this.option.label;
     },
   },
+
   watch: {
     value() {
-      this.option = this.value;
+    this.setOption(this.value);
     },
   },
 };

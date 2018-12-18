@@ -18,7 +18,7 @@ const API = {
     create(form) { return requester('post', `${API_ENDPOINT}/forms`, form); },
     update(id, form) {
       throw new Error('501 - Update has not been implemented yet');
-      // TODO: server don't have update route
+      // TODO: server don't have update or patch route
       // return requester('patch', `${API_ENDPOINT}/forms/${id}`, form);
     },
     destroy(id) { return requester('delete', `${API_ENDPOINT}/forms/${id}`); },

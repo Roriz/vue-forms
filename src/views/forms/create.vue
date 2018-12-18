@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="handleSubmit">
+  <v-form v-model="isValid" ref="form" @submit.prevent="handleSubmit">
     <v-card>
       <v-card-title class="headline grey lighten-2" primary-title>
         {{ isEdit ? 'Edit' : 'Create' }} form
@@ -9,10 +9,11 @@
         <v-text-field
           v-model="form.form"
           label="Name"
+          :rules="formRules"
           required
         />
 
-        <vf-infinity-fields v-model="form.fields"/>
+        <infinity-fields v-model="form.fields"/>
       </v-card-text>
 
       <v-divider></v-divider>
@@ -22,7 +23,7 @@
         <v-btn
           color="deep-purple lighten-2"
           :disabled="loading"
-          @click="handlePreview"
+          @click="previewing = true"
         >
           Preview
         </v-btn>
@@ -36,27 +37,36 @@
       </v-card-actions>
     </v-card>
 
-    <dialog-show :opened="previewing" :form="form" @close="previewing = false"/>
-  </form>
+    <dialog-show v-if="previewing" :form="form" @close="previewing = false"/>
+  </v-form>
 </template>
 
 <script>
-import VfInfinityFields from '@/components/infinity-fields.vue';
+import InfinityFields from '@/views/fields/infinity-fields.vue';
 import DialogShow from '@/views/forms/dialog-show.vue';
 import EventBus from '@/utils/event-bus';
+import FORM_RULES from '@/consts/form-rules';
 
 export default {
   name: 'form-create',
 
   components: {
-    VfInfinityFields,
+    InfinityFields,
     DialogShow,
+  },
+
+  props: {
+    formRules: {
+      type: Array,
+      default: () => ([FORM_RULES.required]),
+    },
   },
 
   data() {
     return {
       previewing: false,
       loading: false,
+      isValid: true,
       form: {
         name: '',
         fields: [],
@@ -69,11 +79,14 @@ export default {
   },
 
   methods: {
-    handlePreview() {
-      this.previewing = true;
+    handleSubmit() {
+      this.$refs.form.validate();
+      if (this.isValid) {
+        this.save();
+      }
     },
 
-    async handleSubmit() {
+    async save() {
       this.loading = true;
       try {
         if (this.isEdit) {
@@ -86,6 +99,7 @@ export default {
           EventBus.$emit('reloadPage');
         });
       } catch (e) {
+        // TODO: Add bug/request tracker like bugsnag
         console.error(e);
         EventBus.$emit('vf-notify', { color: 'error', text: e.message || 'something went wrong try again later' });
       }
@@ -99,6 +113,7 @@ export default {
       try {
         this.form = await this.$store.dispatch('forms/fetchOne', id);
       } catch (e) {
+        // TODO: Add bug/request tracker like bugsnag
         console.error(e);
       }
       this.loading = false;

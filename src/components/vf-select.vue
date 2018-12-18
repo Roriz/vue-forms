@@ -3,20 +3,22 @@
     :label="field.label"
     :rules="rules"
     :items="field.options"
-    @input="v => $emit('input', v)"
+    @input="handleInput"
     item-text="label"
     item-value="text"
   />
 </template>
 
 <script>
+import FormRules from '@/consts/form-rules';
+
 export default {
   name: 'vf-select',
 
   props: {
     value: {
-      type: Object,
-      default: () => ({}),
+      type: String,
+      default: '',
     },
     field: {
       type: Object,
@@ -24,11 +26,17 @@ export default {
     },
   },
 
+  methods: {
+    handleInput(value) {
+      this.$emit('input', value);
+    },
+  },
+
   computed: {
     rules() {
       const rules = [];
       if (this.field.required) {
-        rules.push(value => !!value || 'Required.');
+        rules.push(FormRules.required);
       }
       return rules;
     },
