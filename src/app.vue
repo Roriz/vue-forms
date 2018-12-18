@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <vf-menu />
-    <vf-header />
+    <vf-menu class="vf-menu"/>
+    <vf-header class="vf-header"/>
 
     <v-content>
       <v-container fluid>

@@ -64,7 +64,7 @@ export default {
 
   watch: {
     value() {
-    this.setOption(this.value);
+      this.setOption(this.value);
     },
   },
 };

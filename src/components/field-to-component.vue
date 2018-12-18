@@ -1,5 +1,6 @@
 <template>
   <component
+    v-if="componentTag"
     :is="componentTag"
     :field="field"
     :value="value"
