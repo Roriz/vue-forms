@@ -3,11 +3,13 @@
     :label="field.label"
     :value="value"
     :rules="rules"
-    @input="v => $emit('input', v)"
+    @input="handleInput"
   />
 </template>
 
 <script>
+import FormRules from '@/consts/form-rules';
+
 export default {
   name: 'vf-input-text',
 
@@ -22,11 +24,17 @@ export default {
     },
   },
 
+  methods: {
+    handleInput(value) {
+      this.$emit('input', value);
+    },
+  },
+
   computed: {
     rules() {
       const rules = [];
       if (this.field.required) {
-        rules.push(value => !!value || 'Required.');
+        rules.push(FormRules.required);
       }
       return rules;
     },

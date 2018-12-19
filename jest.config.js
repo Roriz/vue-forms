@@ -3,7 +3,9 @@ module.exports = {
   collectCoverageFrom: [
     'src/**/*.{js,vue}',
     '!src/main.js',
+    '!src/router.js',
     '!src/app.vue',
+    '!src/store/**',
     '!src/plugins/*',
     '!src/consts/*',
   ],
