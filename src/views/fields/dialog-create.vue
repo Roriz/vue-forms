@@ -88,7 +88,7 @@ export default {
   mounted() {
     this.field = {
       ...this.field,
-      ...(this.value || {}),
+      ...this.value,
     };
   },
 

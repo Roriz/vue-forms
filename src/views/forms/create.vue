@@ -122,7 +122,7 @@ export default {
 
   computed: {
     isEdit() {
-      return this.$route.params.id;
+      return Boolean(this.$route.params.id);
     },
   },
 };

@@ -40,11 +40,11 @@ export default {
 
   methods: {
     handleOption() {
-      this.$emit('input', this.filledOptions);
+      this.$emit('input', this.filterdOptions);
     },
 
     handleDestroy(key) {
-      this.$emit('input', this.filledOptions.filter((o, i) => i !== key));
+      this.$emit('input', this.filterdOptions.filter((o, i) => i !== key));
     },
 
     reset() {
@@ -56,7 +56,7 @@ export default {
   },
 
   computed: {
-    filledOptions() {
+    filterdOptions() {
       return this.options.filter(o => o.label && o.value);
     },
 

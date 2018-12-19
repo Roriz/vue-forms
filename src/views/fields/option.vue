@@ -52,19 +52,22 @@ export default {
     },
 
     setOption() {
-      this.option = this.value;
+      this.option = {
+        ...this.option,
+        ...this.value,
+      };
     },
   },
 
   computed: {
     isValid() {
-      return this.option.value && this.option.label;
+      return Boolean(this.option.value && this.option.label);
     },
   },
 
   watch: {
     value() {
-    this.setOption(this.value);
+      this.setOption(this.value);
     },
   },
 };

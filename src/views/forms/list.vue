@@ -87,6 +87,7 @@ export default {
     },
 
     async handleDestroy(id) {
+      if (!id) { return; }
       this.loading = true;
 
       try {

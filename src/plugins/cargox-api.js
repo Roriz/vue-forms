@@ -16,7 +16,7 @@ const API = {
     list() { return requester('get', `${API_ENDPOINT}/forms`); },
     get(id) { return requester('get', `${API_ENDPOINT}/forms/${id}`); },
     create(form) { return requester('post', `${API_ENDPOINT}/forms`, form); },
-    update(id, form) {
+    update() {
       throw new Error('501 - Update has not been implemented yet');
       // TODO: server don't have update or patch route
       // return requester('patch', `${API_ENDPOINT}/forms/${id}`, form);
