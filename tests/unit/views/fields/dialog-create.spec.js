@@ -1,5 +1,5 @@
 import DialogCreate from '@/views/fields/dialog-create.vue';
-import Helper from '../helper';
+import Helper from '../../helper';
 
 describe('fields-dialog-create.vue', () => {
   it('shoulds set default field when mount', () => {

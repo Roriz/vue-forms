@@ -1,5 +1,5 @@
 import InfinityFields from '@/views/fields/infinity-fields.vue';
-import Helper from '../helper';
+import Helper from '../../helper';
 
 describe('infinity-fields.vue', () => {
   it('shoulds mounted with right defaults', () => {
